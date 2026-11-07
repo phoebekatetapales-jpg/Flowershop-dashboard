@@ -335,6 +335,29 @@ html, body { margin: 0; background: #F6F1E9; }
 .pa-field input:focus, .pa-field select:focus, .pa-field textarea:focus { border-color: var(--pa-sage); box-shadow: 0 0 0 3px rgba(159,177,151,.25); }
 .pa-dialog-f { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
 .pa-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60; display: flex; align-items: center; gap: 10px; background: var(--pa-forest); color: #FBF7F0; padding: 12px 16px; border-radius: 14px; box-shadow: 0 16px 36px -14px rgba(46,74,59,.7); font-size: 13.5px; max-width: calc(100% - 32px); }
+.pa-err { grid-column: 1 / -1; margin: 0; font-size: 12.5px; color: var(--pa-rose-ink); background: var(--pa-rose-soft); padding: 8px 11px; border-radius: 10px; }
+.pa-field input.is-invalid, .pa-field select.is-invalid { border-color: var(--pa-rose); box-shadow: 0 0 0 3px rgba(197,140,136,.2); }
+.pa-pop-h .pa-linkbtn { border: 0; background: transparent; color: var(--pa-forest-2); font-size: 12px; font-weight: 500; padding: 2px 4px; border-radius: 6px; }
+.pa-pop-h .pa-linkbtn:hover { text-decoration: underline; }
+.pa-notif { cursor: pointer; }
+.pa-notif-empty { padding: 14px 10px; color: var(--pa-muted); font-size: 13px; }
+.pa-confirm-t { margin: 0; color: var(--pa-muted); }
+
+/* recipes */
+.pa-recipes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 12px; }
+.pa-recipe { display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 14px; border: 1px solid var(--pa-line-2); background: #FFFEFB; transition: border-color .18s, transform .18s; }
+.pa-recipe:hover { border-color: #DCCFBD; transform: translateY(-2px); }
+.pa-recipe-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.pa-recipe-name { font-weight: 600; }
+.pa-recipe-price { font-family: var(--font-anthropic-serif); font-size: 18px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pa-recipe-stems { display: flex; flex-wrap: wrap; gap: 5px; }
+.pa-recipe-stems span { font-size: 11.5px; padding: 2px 8px; border-radius: 999px; background: var(--pa-sage-soft); color: var(--pa-sage-ink); }
+.pa-recipe-meta { font-size: 12px; color: var(--pa-muted); margin-top: auto; }
+
+/* signed out */
+.pa-signedout { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 16px; background: var(--pa-cream); text-align: center; }
+.pa-signedout-box { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 360px; }
+.pa-signedout .pa-logo { width: 56px; height: 56px; border-radius: 16px; }
 
 /* responsive */
 @container pa (max-width: 820px) {
@@ -391,13 +414,13 @@ html, body { margin: 0; background: #F6F1E9; }
       <li><button class="pa-nav-btn" type="button" aria-current="page" data-target="top" title="Dashboard"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span class="pa-hide">Dashboard</span></button></li>
       <li><button class="pa-nav-btn" type="button" data-target="queue" title="Orders"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="pa-hide">Orders</span><span class="pa-nav-pill pa-hide">Live</span></button></li>
       <li><button class="pa-nav-btn" type="button" data-target="inventory" title="Stem Inventory"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg><span class="pa-hide">Stem Inventory</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="" title="Arrangement Recipes"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="pa-hide">Arrangement Recipes</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-target="recipes" title="Arrangement Recipes"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="pa-hide">Arrangement Recipes</span></button></li>
       <li><button class="pa-nav-btn" type="button" data-target="queue" data-filter="Weekly Office Subscription" title="Subscriptions"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span class="pa-hide">Subscriptions</span></button></li>
       <li><button class="pa-nav-btn" type="button" data-target="deliveries" title="Deliveries"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span class="pa-hide">Deliveries</span></button></li>
     </ul>
     <div class="pa-nav-label pa-hide">Studio</div>
     <ul class="pa-nav">
-      <li><button class="pa-nav-btn" type="button" data-target="" title="Store Settings"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg><span class="pa-hide">Store Settings</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-modal="settings" title="Store Settings"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg><span class="pa-hide">Store Settings</span></button></li>
     </ul>
     <div class="pa-side-foot">
       <button class="pa-collapse" type="button" aria-expanded="true" aria-label="Collapse sidebar"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg><span class="pa-hide">Collapse sidebar</span></button>
@@ -407,7 +430,7 @@ html, body { margin: 0; background: #F6F1E9; }
           <div class="pa-profile-name">Elena Vance</div>
           <div class="pa-profile-role">Head Florist · On shift</div>
         </div>
-        <button class="pa-profile-out pa-hide" type="button" aria-label="Sign out" data-soon="1"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></button>
+        <button class="pa-profile-out pa-hide pa-open" type="button" aria-label="Sign out" data-modal="signout"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg></button>
       </div>
     </div>
   </div></aside>
@@ -424,10 +447,9 @@ html, body { margin: 0; background: #F6F1E9; }
         <label class="pa-date" title="Reporting window">
           <svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
           <select class="pa-range" aria-label="Date range">
-            <option>Today, Mother's Day Weekend</option>
-            <option>Yesterday</option>
-            <option>This week</option>
-            <option>Last 30 days</option>
+            <option value="today">Today, Mother's Day Weekend</option>
+            <option value="yesterday">Yesterday</option>
+            <option value="week">This week (7 days)</option>
           </select>
           <span class="pa-chev"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
         </label>
@@ -437,7 +459,7 @@ html, body { margin: 0; background: #F6F1E9; }
             <span class="pa-badge" data-draw="val" data-source="notif_unread" data-field="n" data-fmt="int">—</span>
           </button>
           <div class="pa-pop" hidden>
-            <div class="pa-pop-h">Notifications <small>Today</small></div>
+            <div class="pa-pop-h">Notifications <button class="pa-linkbtn pa-mark-all" type="button">Mark all as read</button></div>
             <ul class="pa-notif-list" data-draw="notif-list" data-source="notifications"></ul>
           </div>
         </div>
@@ -451,7 +473,7 @@ html, body { margin: 0; background: #F6F1E9; }
         <div>
           <span class="pa-eyebrow"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg> Mother's Day Weekend · Saturday</span>
           <h1 class="pa-h1">Good morning, Elena</h1>
-          <p class="pa-take">Revenue is <b class="dash-skeleton" data-draw="val" data-source="rev" data-field="change" data-fmt="signedpct">—</b> on yesterday, <b class="dash-skeleton" data-draw="val" data-source="orders_total" data-field="total" data-fmt="int">—</b> orders are in motion, and <b class="dash-skeleton" data-draw="val" data-source="inv_alerts" data-field="n" data-fmt="int">—</b> stem lines need attention before the afternoon rush.</p>
+          <p class="pa-take"><span data-draw="rev-take">Revenue is <b>—</b></span>, <b class="dash-skeleton" data-draw="val" data-source="orders_total" data-field="total" data-fmt="int">—</b> orders are in motion, and <b class="dash-skeleton" data-draw="val" data-source="inv_alerts" data-field="n" data-fmt="int">—</b> stem lines need attention before the afternoon rush.</p>
         </div>
         <span class="pa-live"><i></i>Live · synced with the studio POS</span>
       </section>
@@ -459,12 +481,9 @@ html, body { margin: 0; background: #F6F1E9; }
       <!-- KPI ROW -->
       <section class="pa-kpis" id="kpis" aria-label="Key metrics">
         <article class="pa-card pa-kpi" id="kpi-revenue">
-          <div class="pa-kpi-h"><span class="pa-chip-ic pa-ci-forest"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Daily revenue<span class="pa-win">Today</span></div>
+          <div class="pa-kpi-h"><span class="pa-chip-ic pa-ci-forest"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Revenue<span class="pa-win" data-draw="val" data-source="rev" data-field="label">Today</span></div>
           <div class="pa-big"><span class="dash-skeleton" data-draw="val" data-source="rev" data-field="today" data-fmt="money">—</span></div>
-          <div class="pa-kpi-sub">
-            <span class="pa-delta" data-draw="val" data-source="rev" data-field="change" data-fmt="signedpct" data-tone="up-good">—</span>
-            <span>vs yesterday (<span data-draw="val" data-source="rev" data-field="yesterday" data-fmt="money0">—</span>)</span>
-          </div>
+          <div class="pa-kpi-sub" data-draw="rev-sub"></div>
           <div class="pa-spark" data-draw="rev-spark" data-source="weekly"></div>
         </article>
 
@@ -599,6 +618,17 @@ html, body { margin: 0; background: #F6F1E9; }
           </article>
         </div>
       </section>
+
+      <!-- Recipes -->
+      <article class="pa-card pa-panel" id="recipes">
+        <div class="pa-panel-h">
+          <div>
+            <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Arrangement recipes</h2>
+            <p class="pa-note">Stem recipes from today's orders · stems marked low are flagged</p>
+          </div>
+        </div>
+        <ul class="pa-recipes" data-draw="recipes" data-source="orders"></ul>
+      </article>
     </main>
   </div>
 
@@ -612,23 +642,25 @@ html, body { margin: 0; background: #F6F1E9; }
         </div>
         <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
-      <div class="pa-fields">
-        <label class="pa-field full">Customer name<input type="text" placeholder="e.g. Harriet Lowell"></label>
+      <div class="pa-fields" data-form="order">
+        <p class="pa-err" hidden></p>
+        <label class="pa-field full">Customer name<input name="customer" type="text" placeholder="e.g. Harriet Lowell"></label>
         <label class="pa-field">Occasion
-          <select><option>Mother's Day</option><option>Bridal</option><option>Sympathy</option><option>Birthday</option><option>Corporate / Subscription</option><option>Event installation</option></select>
+          <select name="occasion"><option>Mother's Day</option><option>Bridal</option><option>Sympathy</option><option>Birthday</option><option>Corporate / Subscription</option><option>Event installation</option></select>
         </label>
         <label class="pa-field">Fulfillment
-          <select><option>Delivery</option><option>Studio pickup</option></select>
+          <select name="fulfillment"><option>Delivery</option><option>Studio pickup</option></select>
         </label>
-        <label class="pa-field">Date<input type="date"></label>
+        <label class="pa-field">Date<input name="date" type="date"></label>
         <label class="pa-field">Window
-          <select><option>09:00–11:00</option><option>11:00–13:00</option><option>13:00–15:00</option><option>15:00–17:00</option></select>
+          <select name="window"><option>09:00–11:00</option><option>11:00–13:00</option><option>13:00–15:00</option><option>15:00–17:00</option></select>
         </label>
-        <label class="pa-field full">Palette &amp; stems<textarea placeholder="Blush garden roses, ranunculus, trailing jasmine…"></textarea></label>
+        <label class="pa-field">Price ($)<input name="total" type="number" min="0" step="1" placeholder="e.g. 120"></label>
+        <label class="pa-field full">Palette &amp; stems<textarea name="ingredients" placeholder="Blush garden roses, ranunculus, trailing jasmine…"></textarea></label>
       </div>
       <div class="pa-dialog-f">
         <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
-        <button class="pa-btn pa-btn-primary pa-save" type="button" data-toast="order"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Create order</button>
+        <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="order"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Create order</button>
       </div>
     </div>
   </div>
@@ -642,23 +674,72 @@ html, body { margin: 0; background: #F6F1E9; }
         </div>
         <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
       </div>
-      <div class="pa-fields">
-        <label class="pa-field full">Variety<select data-draw="waste-stem" data-source="inventory"></select></label>
-        <label class="pa-field">Stems lost<input type="number" min="1" step="1" placeholder="0"></label>
+      <div class="pa-fields" data-form="waste">
+        <p class="pa-err" hidden></p>
+        <label class="pa-field full">Variety<select name="stem" data-draw="waste-stem" data-source="inventory"></select></label>
+        <label class="pa-field">Stems lost<input name="n" type="number" min="1" step="1" placeholder="0"></label>
         <label class="pa-field">Reason
-          <select><option>Botrytis / mould</option><option>Over-opened</option><option>Bent or snapped stem</option><option>Damaged in transit</option><option>Dehydrated</option></select>
+          <select name="reason"><option>Botrytis / mould</option><option>Over-opened</option><option>Bent or snapped stem</option><option>Damaged in transit</option><option>Dehydrated</option></select>
         </label>
-        <label class="pa-field full">Note<textarea placeholder="Which cooler, which bucket, anything the buyer should know…"></textarea></label>
+        <label class="pa-field full">Note<textarea name="note" placeholder="Which cooler, which bucket, anything the buyer should know…"></textarea></label>
       </div>
       <div class="pa-dialog-f">
         <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
-        <button class="pa-btn pa-btn-soft pa-save" type="button" data-toast="waste"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>Log spoilage</button>
+        <button class="pa-btn pa-btn-soft pa-save" type="button" data-save="waste"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>Log spoilage</button>
       </div>
     </div>
   </div>
 
-  <div class="pa-toast" data-toast-id="order" role="status" hidden><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Order drafted. This is a preview, so nothing was saved.</div>
-  <div class="pa-toast" data-toast-id="waste" role="status" hidden><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>Spoilage logged. This is a preview, so nothing was saved.</div>
+  <div class="pa-modal" data-modal-id="settings" hidden>
+    <div class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="pa-settings-t">
+      <div class="pa-dialog-h">
+        <div>
+          <h2 class="pa-h2" id="pa-settings-t">Store settings</h2>
+          <p class="pa-note">Shop details and the targets the dashboard checks against</p>
+        </div>
+        <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+      <div class="pa-fields" data-form="settings">
+        <p class="pa-err" hidden></p>
+        <label class="pa-field full">Shop name<input name="shop" type="text"></label>
+        <label class="pa-field full">Tagline<input name="tagline" type="text"></label>
+        <label class="pa-field">Cold room min (°F)<input name="tMin" type="number" step="1"></label>
+        <label class="pa-field">Cold room max (°F)<input name="tMax" type="number" step="1"></label>
+        <label class="pa-field">Humidity min (%)<input name="hMin" type="number" step="1" min="0" max="100"></label>
+        <label class="pa-field">Humidity max (%)<input name="hMax" type="number" step="1" min="0" max="100"></label>
+        <label class="pa-field full">Weekly spoilage goal (%)<input name="goal" type="number" step="0.5" min="0" max="20"></label>
+      </div>
+      <div class="pa-dialog-f">
+        <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
+        <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="settings">Save settings</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pa-modal" data-modal-id="signout" hidden>
+    <div class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="pa-signout-t" style="width:min(380px,100%)">
+      <div class="pa-dialog-h">
+        <h2 class="pa-h2" id="pa-signout-t">Sign out?</h2>
+        <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+      <p class="pa-confirm-t">You'll be signed out of the dashboard on this device.</p>
+      <div class="pa-dialog-f">
+        <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
+        <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="signout">Sign out</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pa-signedout" hidden>
+    <div class="pa-signedout-box">
+      <div class="pa-logo"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/></svg></div>
+      <h1 class="pa-h1 pa-brand-copy">Gayle&#39;s Flower Shop</h1>
+      <p class="pa-confirm-t">You've been signed out.</p>
+      <button class="pa-btn pa-btn-primary pa-signin" type="button">Sign back in</button>
+    </div>
+  </div>
+
+  <div class="pa-toast" data-toast-id="msg" role="status" hidden><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg><span class="pa-toast-msg"></span></div>
   <div class="pa-toast" data-toast-id="soon" role="status" hidden><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg>That section isn't part of this preview yet.</div>
 </div>
 </div>
@@ -689,13 +770,19 @@ window.paStop = 1;
 /* ---------- calculations ---------- */
 dash.calc('rev', {
   inputs: ['weekly'],
-  title: 'Revenue today vs yesterday',
-  description: 'Walk-in plus event revenue on the last two days of the weekly data, and the change between them.',
+  title: 'Revenue for the selected date range',
+  description: 'Walk-in plus event revenue for today, yesterday or the whole week (from the date range dropdown), with the change vs the day before.',
   fn: (weekly) => {
-    const t = weekly[weekly.length - 1], y = weekly[weekly.length - 2];
-    const today = Number(t.walkin_revenue) + Number(t.event_revenue);
-    const yesterday = Number(y.walkin_revenue) + Number(y.event_revenue);
-    return [{day: t.day, today, yesterday, change: today / yesterday - 1}];
+    const range = dash.params().range || 'today';
+    const tot = (r) => Number(r.walkin_revenue) + Number(r.event_revenue);
+    const n = weekly.length;
+    if (range === 'week') {
+      const sum = weekly.reduce((s, r) => s + tot(r), 0);
+      return [{range, label: 'Last 7 days', today: sum, yesterday: null, change: null, avg: sum / n}];
+    }
+    const i = range === 'yesterday' ? n - 2 : n - 1;
+    const t = tot(weekly[i]), y = tot(weekly[i - 1]);
+    return [{range, label: range === 'yesterday' ? 'Yesterday' : 'Today', day: weekly[i].day, idx: i, today: t, yesterday: y, change: t / y - 1}];
   },
 });
 dash.calc('orders_total', {
@@ -791,6 +878,27 @@ dash.draw('val', (el) => {
   }
 });
 
+/* ---------- revenue text that depends on the date range ---------- */
+dash.draw('rev-sub', (el) => {
+  el.replaceChildren();
+  const r = dash.data('rev').data[0];
+  if (!r) return;
+  if (r.range === 'week') { el.append(paEl('span', '', `7-day total · avg ${FMT.money0(r.avg)} a day`)); return; }
+  el.append(
+    paEl('span', 'pa-delta' + (r.change < 0 ? ' is-bad is-neg' : ''), FMT.signedpct(r.change)),
+    paEl('span', '', `vs ${r.range === 'yesterday' ? 'the day before' : 'yesterday'} (${FMT.money0(r.yesterday)})`)
+  );
+});
+dash.draw('rev-take', (el) => {
+  el.replaceChildren();
+  const r = dash.data('rev').data[0];
+  if (!r) return;
+  if (r.range === 'week') { el.append("This week's revenue is ", paEl('b', '', FMT.money0(r.today))); return; }
+  const dir = (r.change >= 0 ? 'up ' : 'down ') + FMT.pct(Math.abs(r.change));
+  if (r.range === 'yesterday') el.append("Yesterday's revenue was ", paEl('b', '', dir), ' on the day before');
+  else el.append('Revenue is ', paEl('b', '', dir), ' on yesterday');
+});
+
 /* ---------- small tooltip helper for sparklines ---------- */
 window.paSparkTip = (el, svg, pts, label) => {
   const tip = paEl('div', 'pa-tip');
@@ -824,7 +932,11 @@ dash.draw('rev-spark', (el) => {
   svg.selectAll('rect').data(rows).join('rect')
     .attr('x', (d) => x(d.day)).attr('width', x.bandwidth())
     .attr('y', (d, i) => y(tot[i])).attr('height', (d, i) => H - 2 - y(tot[i])).attr('rx', 3)
-    .attr('fill', (d, i) => i === rows.length - 1 ? 'var(--pa-forest-2)' : 'var(--pa-sage-soft)');
+    .attr('fill', (d, i) => {
+      const r = dash.data('rev').data[0] || {};
+      const on = r.range === 'week' || i === (r.idx != null ? r.idx : rows.length - 1);
+      return on ? 'var(--pa-forest-2)' : 'var(--pa-sage-soft)';
+    });
   const fd = d3.utcFormat('%a %b %-d');
   paSparkTip(el, svg, rows.map((d, i) => ({x: x(d.day) + x.bandwidth() / 2, y: y(tot[i])})), (i) => [paEl('div', 'pa-tip-h', fd(new Date(rows[i].day))), paEl('b', '', FMT.money0(tot[i]))]);
 });
@@ -1041,13 +1153,45 @@ dash.draw('waste-stem', (sel) => {
   if (keep) sel.value = keep;
 });
 
+/* ---------- recipes ---------- */
+dash.draw('recipes', (ul) => {
+  ul.replaceChildren();
+  const g = dash.data('orders');
+  if (g.status !== 'ok') return;
+  const low = dash.data('inventory').data.filter((r) => r.condition === 'Low stock').map((r) => r.stem.toLowerCase());
+  for (const o of g.data) {
+    const li = paEl('li', 'pa-recipe');
+    const top = paEl('div', 'pa-recipe-top');
+    const nm = paEl('div');
+    nm.append(paEl('div', 'pa-recipe-name', o.event_type), paEl('div', 'pa-note', o.customer));
+    top.append(nm, paEl('span', 'pa-recipe-price', o.total != null ? FMT.money0(o.total) : '—'));
+    const stems = paEl('div', 'pa-recipe-stems');
+    for (const s of String(o.ingredients || '').split(',').map((x) => x.trim()).filter(Boolean)) {
+      const chip = paEl('span', '', s);
+      const sl = s.toLowerCase();
+      if (low.some((l) => sl.includes(l) || l.includes(sl))) {
+        chip.style.background = 'var(--pa-rose-soft)';
+        chip.style.color = 'var(--pa-rose-ink)';
+        chip.title = 'Low stock';
+        chip.textContent = s + ' · low';
+      }
+      stems.append(chip);
+    }
+    li.append(top, stems, paEl('div', 'pa-recipe-meta', /pickup/i.test(o.window) ? `${o.id} · ${o.window}` : `${o.id} · ${o.fulfillment} · ${o.window}`));
+    ul.append(li);
+  }
+});
+
 /* ---------- notifications ---------- */
 dash.draw('notif-list', (ul) => {
   ul.replaceChildren();
   const g = dash.data('notifications');
   if (g.status !== 'ok') return;
+  if (!g.data.length) { ul.append(paEl('li', 'pa-notif-empty', 'No notifications')); return; }
   for (const n of g.data) {
     const li = paEl('li', 'pa-notif' + (n.unread ? ' is-unread' : ''));
+    li.dataset.id = n.id;
+    li.title = n.unread ? 'Mark as read' : '';
     const t = paEl('div');
     t.append(paEl('div', 'pa-notif-t', n.title), paEl('div', 'pa-notif-d', n.detail));
     li.append(paEl('span', 'pa-notif-dot'), t, paEl('span', 'pa-notif-time', n.time));
@@ -1140,13 +1284,15 @@ $$('.pa-collapse').forEach((b) => b.addEventListener('click', () => {
 }));
 
 let toastTimer = null;
-const toast = (id) => {
+const toast = (id, msg) => {
+  if (msg) $$('.pa-toast-msg').forEach((s) => { s.textContent = msg; });
   $$('.pa-toast').forEach((t) => { t.hidden = t.dataset.toastId !== id; });
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => $$('.pa-toast').forEach((t) => { t.hidden = true; }), 3200);
 };
 
-$$('.pa-nav-btn').forEach((b) => b.addEventListener('click', () => {
+$$('.pa-nav-btn').forEach((b) => b.addEventListener('click', (e) => {
+  if (b.dataset.modal) { e.stopPropagation(); openModal(b.dataset.modal); return; }
   const target = b.dataset.target;
   if (!target) { toast('soon'); return; }
   $$('.pa-nav-btn').forEach((x) => x.removeAttribute('aria-current'));
@@ -1201,27 +1347,182 @@ $$('.pa-stops').forEach((ul) => ul.addEventListener('click', (e) => {
   dash.draw('stops');
 }));
 
+/* ---------- date range dropdown ---------- */
+$$('.pa-range').forEach((s) => s.addEventListener('change', () => dash.setParams({range: s.value === 'today' ? null : s.value})));
+
+/* ---------- notifications ---------- */
+const refresh = () => dash.setParams({});
+const closePop = () => {
+  $$('.pa-pop').forEach((p) => { p.hidden = true; });
+  $$('.pa-bell').forEach((b) => b.setAttribute('aria-expanded', 'false'));
+};
+const notify = (title, detail) => {
+  dash.data('notifications').data.unshift({id: 'n' + Date.now(), title, detail, time: 'Just now', unread: true});
+};
 $$('.pa-bell').forEach((b) => b.addEventListener('click', (e) => {
   e.stopPropagation();
   const open = b.getAttribute('aria-expanded') !== 'true';
   b.setAttribute('aria-expanded', String(open));
   $$('.pa-pop').forEach((p) => { p.hidden = !open; });
+  if (open) dash.draw('notif-list');
 }));
 $$('.pa-pop').forEach((p) => p.addEventListener('click', (e) => e.stopPropagation()));
-document.addEventListener('click', () => {
-  $$('.pa-pop').forEach((p) => { p.hidden = true; });
-  $$('.pa-bell').forEach((b) => b.setAttribute('aria-expanded', 'false'));
-});
+$$('.pa-notif-list').forEach((ul) => ul.addEventListener('click', (e) => {
+  const li = e.target.closest('.pa-notif');
+  if (!li) return;
+  const n = dash.data('notifications').data.find((x) => x.id === li.dataset.id);
+  if (n) { n.unread = false; refresh(); }
+}));
+$$('.pa-mark-all').forEach((b) => b.addEventListener('click', () => {
+  dash.data('notifications').data.forEach((n) => { n.unread = false; });
+  refresh();
+}));
+document.addEventListener('click', closePop);
+
+/* ---------- modals ---------- */
+const pad = (n) => String(n).padStart(2, '0');
+const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const modal = (id) => document.querySelector(`.pa-modal[data-modal-id="${id}"]`);
+const formVals = (id) => {
+  const o = {};
+  modal(id).querySelectorAll('[name]').forEach((f) => { o[f.name] = f.value; });
+  return o;
+};
+const fail = (id, field, msg) => {
+  const m = modal(id);
+  m.querySelectorAll('.is-invalid').forEach((x) => x.classList.remove('is-invalid'));
+  const err = m.querySelector('.pa-err');
+  err.textContent = msg;
+  err.hidden = false;
+  const f = field && m.querySelector(`[name="${field}"]`);
+  if (f) { f.classList.add('is-invalid'); f.focus(); }
+  return false;
+};
+const SETTINGS_KEY = 'gfs-dashboard-settings';
+const applySettings = (s) => {
+  if (s.shop) {
+    $$('.pa-brand-name, .pa-brand-copy').forEach((e) => { e.textContent = s.shop; });
+    document.title = s.shop + ' · Dashboard';
+  }
+  if (s.tagline != null) $$('.pa-brand-sub').forEach((e) => { e.textContent = s.tagline; });
+  if (s.cold) window.paCOLD = s.cold;
+  if (s.goal != null) {
+    window.paSPOIL_GOAL = s.goal;
+    window.paSPOIL_MAX = Math.max(0.05, s.goal * 1.6);
+  }
+};
+try { const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null'); if (saved) applySettings(saved); } catch (e) {}
+
+const openModal = (id) => {
+  const m = modal(id);
+  if (!m) return;
+  closePop();
+  $$('.pa-modal').forEach((x) => { x.hidden = x !== m; });
+  m.querySelectorAll('.pa-err').forEach((e) => { e.hidden = true; });
+  m.querySelectorAll('.is-invalid').forEach((e) => e.classList.remove('is-invalid'));
+  if (id === 'order' || id === 'waste') {
+    m.querySelectorAll('input, textarea').forEach((f) => { f.value = ''; });
+    m.querySelectorAll('select').forEach((f) => { f.selectedIndex = 0; });
+  }
+  if (id === 'order') m.querySelector('[name=date]').value = todayISO();
+  if (id === 'waste') { dash.draw('waste-stem'); m.querySelector('[name=stem]').selectedIndex = 0; }
+  if (id === 'settings') {
+    const C = window.paCOLD;
+    const v = {
+      shop: document.querySelector('.pa-brand-name').textContent,
+      tagline: document.querySelector('.pa-brand-sub').textContent,
+      tMin: C.tMin, tMax: C.tMax, hMin: C.hMin, hMax: C.hMax,
+      goal: +(window.paSPOIL_GOAL * 100).toFixed(1),
+    };
+    for (const k in v) m.querySelector(`[name="${k}"]`).value = v[k];
+  }
+  const first = m.querySelector('input, select, textarea') || m.querySelector('.pa-save');
+  if (first) setTimeout(() => first.focus(), 30);
+};
+const closeModals = () => $$('.pa-modal').forEach((m) => { m.hidden = true; });
+
+const SAVE = {
+  order() {
+    const f = formVals('order');
+    const customer = f.customer.trim();
+    if (!customer) return fail('order', 'customer', 'Add the customer name.');
+    if (f.total !== '' && !(Number(f.total) >= 0)) return fail('order', 'total', 'Price must be 0 or more.');
+    const orders = dash.data('orders').data;
+    const id = 'PS-' + (Math.max(2040, ...orders.map((o) => Number(String(o.id).split('-')[1]) || 0)) + 1);
+    const EVENT = {"Mother's Day": "Mother's Day Bouquet", 'Bridal': 'Bridal Bouquet', 'Sympathy': 'Sympathy Arrangement', 'Birthday': 'Birthday Hand-tied', 'Corporate / Subscription': 'Weekly Office Subscription', 'Event installation': 'Event Installation'};
+    const pickup = f.fulfillment === 'Studio pickup';
+    let win = pickup ? 'Pickup ' + f.window.split('–')[0] : f.window;
+    if (f.date && f.date !== todayISO()) win = d3.timeFormat('%b %-d')(new Date(f.date + 'T00:00')) + ' · ' + win;
+    const event_type = EVENT[f.occasion] || f.occasion;
+    orders.unshift({id, customer, event_type, window: win, ingredients: f.ingredients.trim() || "Designer's choice", status: 'Assembling', fulfillment: pickup ? 'Pickup' : 'Delivery', total: f.total === '' ? null : Number(f.total)});
+    const prep = dash.data('order_stages').data.find((s) => s.stage === 'In prep');
+    if (prep) prep.count += 1;
+    notify('New custom order', `${customer} · ${event_type}`);
+    $$('.pa-q').forEach((q) => { q.value = ''; });
+    dash.setParams({status: null, q: null, event: null});
+    return `Order ${id} for ${customer} added to the queue.`;
+  },
+  waste() {
+    const f = formVals('waste');
+    const r = dash.data('inventory').data.find((x) => x.stem === f.stem);
+    if (!r) return fail('waste', 'stem', 'Choose a variety.');
+    const n = Number(f.n);
+    if (!Number.isInteger(n) || n < 1) return fail('waste', 'n', 'Enter how many stems were lost (1 or more).');
+    if (n > r.on_hand) return fail('waste', 'n', `Only ${r.on_hand} ${r.stem} stems are on hand.`);
+    r.on_hand -= n;
+    if (r.on_hand < r.par * 0.3) { r.condition = 'Low stock'; r.detail = `${r.on_hand} stems left · reorder suggested`; }
+    else if (r.condition === 'Low stock') r.detail = `${r.on_hand} stems left · reorder suggested`;
+    dash.data('kpis').data[0].stems_wasted_week += n;
+    notify('Spoilage logged', `${n} × ${r.stem} · ${f.reason}`);
+    refresh();
+    return `Logged ${n} ${r.stem} stem${n === 1 ? '' : 's'} as lost. Spoilage rate updated.`;
+  },
+  settings() {
+    const f = formVals('settings');
+    const shop = f.shop.trim();
+    if (!shop) return fail('settings', 'shop', 'Add the shop name.');
+    const num = {};
+    for (const k of ['tMin', 'tMax', 'hMin', 'hMax', 'goal']) {
+      if (f[k] === '' || !Number.isFinite(Number(f[k]))) return fail('settings', k, 'Fill in every number.');
+      num[k] = Number(f[k]);
+    }
+    if (num.tMin >= num.tMax) return fail('settings', 'tMax', 'Cold room max must be higher than min.');
+    if (num.hMin >= num.hMax) return fail('settings', 'hMax', 'Humidity max must be higher than min.');
+    if (num.hMin < 0 || num.hMax > 100) return fail('settings', 'hMax', 'Humidity must be between 0 and 100%.');
+    if (num.goal < 0 || num.goal > 20) return fail('settings', 'goal', 'Spoilage goal must be between 0 and 20%.');
+    const s = {shop, tagline: f.tagline.trim(), cold: {tMin: num.tMin, tMax: num.tMax, hMin: num.hMin, hMax: num.hMax}, goal: num.goal / 100};
+    applySettings(s);
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) {}
+    refresh();
+    return 'Store settings saved.';
+  },
+  signout() {
+    $$('.pa-signedout').forEach((e) => { e.hidden = false; });
+    return null;
+  },
+};
 
 $$('.pa-open').forEach((b) => b.addEventListener('click', (e) => {
   e.stopPropagation();
-  $$('.pa-modal').forEach((m) => { m.hidden = m.dataset.modalId !== b.dataset.modal; });
+  openModal(b.dataset.modal);
 }));
-$$('.pa-modal').forEach((m) => m.addEventListener('click', (e) => { if (e.target === m) m.hidden = true; }));
-$$('.pa-close').forEach((b) => b.addEventListener('click', () => $$('.pa-modal').forEach((m) => { m.hidden = true; })));
+$$('.pa-modal').forEach((m) => {
+  m.addEventListener('click', (e) => { if (e.target === m) m.hidden = true; });
+  m.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.matches('input')) { e.preventDefault(); const s = m.querySelector('.pa-save'); if (s) s.click(); }
+  });
+});
+$$('.pa-close').forEach((b) => b.addEventListener('click', closeModals));
 $$('.pa-save').forEach((b) => b.addEventListener('click', () => {
-  $$('.pa-modal').forEach((m) => { m.hidden = true; });
-  toast(b.dataset.toast);
+  const run = SAVE[b.dataset.save];
+  const msg = run ? run() : '';
+  if (msg === false) return;
+  closeModals();
+  if (msg) toast('msg', msg);
+}));
+$$('.pa-signin').forEach((b) => b.addEventListener('click', () => {
+  $$('.pa-signedout').forEach((e) => { e.hidden = true; });
+  toast('msg', 'Welcome back, Elena.');
 }));
 
 dash.onData(() => {
@@ -1233,6 +1534,7 @@ dash.onData(() => {
   $$('.pa-tots-rev').forEach((e) => { e.hidden = metric !== 'revenue'; });
   $$('.pa-tots-del').forEach((e) => { e.hidden = metric !== 'deliveries'; });
   $$('.pa-legbtn').forEach((b) => b.setAttribute('aria-pressed', String(p['hide_' + b.dataset.series] !== true)));
+  $$('.pa-range').forEach((s) => { s.value = p.range || 'today'; });
   const inv = p.inv === 'all' ? 'all' : 'attention';
   $$('.pa-invf').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.inv === inv)));
   $$('.pa-q').forEach((q) => { if (q !== document.activeElement) q.value = p.q || ''; });

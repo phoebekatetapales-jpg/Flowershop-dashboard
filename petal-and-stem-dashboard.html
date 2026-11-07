@@ -55,13 +55,18 @@ html, body { margin: 0; background: #F6F1E9; }
   const INV_BRANCH = {'Ranunculus': 'Cavite', "White O'Hara Garden Roses": 'Cavite', 'Eucalyptus': 'Cavite', 'Peonies': 'Imus', 'Sweet Pea': 'Imus', 'Lily of the Valley': 'Boni-EDSA', 'Ruscus': 'Boni-EDSA'};
   for (const r of DATA.inventory) r.branch = INV_BRANCH[r.stem] || 'Cavite';
   DATA.deliveries = [
-    {id: 'd1', branch: 'Cavite', stop: 1, eta: '11:15', customer: 'Dunmore Family', address: 'Whitaker Funeral Home, 410 Alder St', driver: 'Marcus Bell', vehicle: 'Van 2', note: 'Call on arrival · venue loading dock', x: 22, y: 50, status: 'En route'},
-    {id: 'd2', branch: 'Cavite', stop: 2, eta: '15:30', customer: 'Grace Kim', address: '27 Magnolia Ct', driver: 'Marcus Bell', vehicle: 'Van 2', note: 'Birthday surprise · do not ring before 15:00', x: 34, y: 28, status: 'Scheduled'},
-    {id: 'd3', branch: 'Imus', stop: 1, eta: '12:05', customer: 'Margaret Holloway', address: '18 Primrose Ln', driver: 'Ana Duarte', vehicle: 'Van 1', note: 'Leave on shaded porch · text photo', x: 52, y: 58, status: 'Next'},
-    {id: 'd4', branch: 'Imus', stop: 2, eta: '13:10', customer: 'Priya Raman', address: '5 Orchid St', driver: 'Ana Duarte', vehicle: 'Van 1', note: 'Gate code 2045', x: 62, y: 40, status: 'Scheduled'},
-    {id: 'd5', branch: 'Boni-EDSA', stop: 1, eta: '10:00', customer: 'Northfield Legal LLP', address: '12F Pioneer Tower, reception', driver: 'Joel Ramos', vehicle: 'Van 3', note: 'Weekly subscription · swap old vases', x: 76, y: 30, status: 'En route'},
-    {id: 'd6', branch: 'Boni-EDSA', stop: 2, eta: '14:30', customer: 'The Linden Hotel', address: '900 Harbor Blvd, service entrance', driver: 'Joel Ramos', vehicle: 'Van 3', note: 'Check in with concierge · install by 15:45', x: 70, y: 66, status: 'Scheduled'},
+    {id: 'd1', orderId: 'PS-2043', branch: 'Cavite', eta: '11:15', customer: 'Dunmore Family', address: 'P. Burgos Ave, Caridad, Cavite City', driver: 'Marcus Bell', vehicle: 'Van 2', note: 'Call on arrival · chapel side entrance', x: 22, y: 50, status: 'En route'},
+    {id: 'd2', orderId: 'PS-2048', branch: 'Cavite', eta: '15:30', customer: 'Grace Kim', address: 'Manila-Cavite Rd, San Antonio, Cavite City', driver: 'Marcus Bell', vehicle: 'Van 2', note: 'Birthday surprise · do not ring before 15:00', x: 34, y: 28, status: 'Scheduled'},
+    {id: 'd3', orderId: 'PS-2041', branch: 'Imus', eta: '12:05', customer: 'Margaret Holloway', address: 'Anabu II-A, Imus, Cavite', driver: 'Ana Duarte', vehicle: 'Van 1', note: 'Leave with guard · text photo', x: 52, y: 58, status: 'Scheduled'},
+    {id: 'd4', orderId: 'PS-2045', branch: 'Imus', eta: '13:10', customer: 'Priya Raman', address: 'Bucandala I, Imus, Cavite', driver: 'Ana Duarte', vehicle: 'Van 1', note: 'Gate code 2045', x: 62, y: 40, status: 'Scheduled'},
+    {id: 'd5', orderId: 'PS-2044', branch: 'Boni-EDSA', eta: '10:00', customer: 'Northfield Legal LLP', address: 'Pioneer St, Mandaluyong City', driver: 'Joel Ramos', vehicle: 'Van 3', note: 'Weekly subscription · swap old vases', x: 76, y: 30, status: 'En route'},
+    {id: 'd6', orderId: 'PS-2046', branch: 'Boni-EDSA', eta: '14:30', customer: 'The Linden Hotel', address: 'Shaw Blvd, Mandaluyong City', driver: 'Joel Ramos', vehicle: 'Van 3', note: 'Check in with concierge · install by 15:45', x: 70, y: 66, status: 'Scheduled'},
   ];
+  window.paDRIVERS = {
+    'Cavite': [['Marcus Bell', 'Van 2'], ['Rico Santos', 'Motorbike 1']],
+    'Imus': [['Ana Duarte', 'Van 1'], ['Jun Villanueva', 'Motorbike 2']],
+    'Boni-EDSA': [['Joel Ramos', 'Van 3'], ['Liza Cruz', 'Motorbike 3']],
+  };
   const NOTIF_BRANCH = {n1: 'Cavite', n2: 'Cavite', n3: 'Cavite', n4: 'Imus'};
   for (const n of DATA.notifications) n.detail = `${NOTIF_BRANCH[n.id]} · ${n.detail.replace(' & PS-2044', '')}`;
 
@@ -354,7 +359,28 @@ html, body { margin: 0; background: #F6F1E9; }
 .pa-pin { cursor: pointer; }
 .pa-pin circle.ring { transition: r .2s; }
 .pa-stops { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.pa-stop { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 12px; border-radius: 14px; border: 1px solid var(--pa-line-2); background: #FFFEFB; text-align: left; transition: border-color .18s, background .18s, box-shadow .18s; }
+.pa-stop { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 12px; border-radius: 14px; border: 1px solid var(--pa-line-2); background: #FFFEFB; text-align: left; cursor: pointer; transition: border-color .18s, background .18s, box-shadow .18s; }
+.pa-stop:focus-visible { outline: 2px solid var(--pa-forest-2); outline-offset: 2px; }
+.pa-stop.is-done { background: var(--pa-cream); }
+.pa-stop.is-done .pa-stop-name, .pa-stop.is-done .pa-stop-addr { color: var(--pa-muted); }
+.pa-stop.is-done .pa-stop-n { background: var(--pa-sage); }
+.pa-stop.is-late .pa-eta { color: var(--pa-rose-ink); }
+.pa-stop-acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+.pa-sbtn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--pa-line); background: var(--pa-paper); color: var(--pa-ink); font-size: 12.5px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background .15s, border-color .15s; }
+.pa-sbtn:hover { border-color: var(--pa-sage); background: #fff; }
+.pa-sbtn.primary { background: var(--pa-forest); border-color: var(--pa-forest); color: #FBF7F0; }
+.pa-sbtn.primary:hover { background: var(--pa-forest-2); }
+.pa-mini.st.s-enroute { background: var(--pa-amber-soft); color: var(--pa-amber-ink); }
+.pa-mini.st.s-scheduled { background: var(--pa-sky-soft); color: var(--pa-sky-ink); }
+.pa-mini.st.s-delivered { background: var(--pa-sage-soft); color: var(--pa-sage-ink); }
+.pa-btn-sm { height: 34px; padding: 0 12px; font-size: 13px; }
+.pa-dl-progress { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 12.5px; color: var(--pa-muted); }
+.pa-dl-progress b { color: var(--pa-ink); font-weight: 600; }
+.pa-dl-bar { flex: 1; height: 8px; border-radius: 999px; background: var(--pa-line-2); overflow: hidden; }
+.pa-dl-bar span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--pa-sage), var(--pa-forest-2)); transition: width .4s; }
+.pa-dl-tabs { margin-top: 14px; }
+.pa-dl-tabs .pa-cnt { font-size: 11px; color: var(--pa-faint); margin-left: 4px; }
+.pa-tag.s-delivered { background: var(--pa-cream); color: var(--pa-muted); border-color: var(--pa-line); }
 .pa-stop:hover { border-color: #DCCFBD; }
 .pa-stop.is-sel { border-color: var(--pa-forest-2); background: #FAFBF6; box-shadow: 0 0 0 3px rgba(61,97,80,.12); }
 .pa-stop-n { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 13px; background: var(--pa-forest); color: #FBF7F0; font-variant-numeric: tabular-nums; }
@@ -664,10 +690,13 @@ html, body { margin: 0; background: #F6F1E9; }
             <div class="pa-panel-h">
               <div>
                 <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Today's delivery run</h2>
-                <p class="pa-note">Next stops on the route · tap a stop to find it on the map</p>
+                <p class="pa-note">Tap a stop to find it on the map · update it as the driver goes</p>
               </div>
+              <button class="pa-btn pa-btn-ghost pa-open pa-btn-sm" type="button" data-modal="delivery"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add delivery</button>
             </div>
+            <div class="pa-dl-progress" data-draw="dl-progress"></div>
             <div class="pa-map" data-draw="route-map" data-source="deliveries"></div>
+            <div class="pa-seg pa-dl-tabs" role="group" aria-label="Show deliveries" data-draw="dl-tabs"></div>
             <ul class="pa-stops" data-draw="stops" data-source="deliveries"></ul>
           </article>
         </div>
@@ -712,6 +741,7 @@ html, body { margin: 0; background: #F6F1E9; }
         <label class="pa-field">Window
           <select name="window"><option>09:00–11:00</option><option>11:00–13:00</option><option>13:00–15:00</option><option>15:00–17:00</option></select>
         </label>
+        <label class="pa-field full pa-addr-field">Delivery address<input name="address" type="text" placeholder="Street, barangay, city"></label>
         <label class="pa-field">Price (₱)<input name="total" type="number" min="0" step="1" placeholder="e.g. 3500"></label>
         <label class="pa-field full">Palette &amp; stems<textarea name="ingredients" placeholder="Blush garden roses, ranunculus, trailing jasmine…"></textarea></label>
       </div>
@@ -743,6 +773,35 @@ html, body { margin: 0; background: #F6F1E9; }
       <div class="pa-dialog-f">
         <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
         <button class="pa-btn pa-btn-soft pa-save" type="button" data-save="waste"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>Log spoilage</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pa-modal" data-modal-id="delivery" hidden>
+    <div class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="pa-dl-t">
+      <div class="pa-dialog-h">
+        <div>
+          <h2 class="pa-h2" id="pa-dl-t">Add delivery</h2>
+          <p class="pa-note">Puts a stop on the branch's route for today</p>
+        </div>
+        <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      </div>
+      <div class="pa-fields" data-form="delivery">
+        <p class="pa-err" hidden></p>
+        <input type="hidden" name="id">
+        <label class="pa-field">Customer<input name="customer" type="text" placeholder="e.g. Harriet Lowell"></label>
+        <label class="pa-field">Branch
+          <select name="branch"><option>Cavite</option><option>Imus</option><option>Boni-EDSA</option></select>
+        </label>
+        <label class="pa-field full">Address<input name="address" type="text" placeholder="Street, barangay, city"></label>
+        <label class="pa-field">Arrive by<input name="eta" type="time"></label>
+        <label class="pa-field">Driver<select name="driver"></select></label>
+        <label class="pa-field full">Note for the driver<input name="note" type="text" placeholder="Gate code, who to hand it to, landmarks…"></label>
+      </div>
+      <div class="pa-dialog-f">
+        <button class="pa-btn pa-btn-ghost pa-dl-remove" type="button" style="margin-right:auto;color:var(--pa-rose-ink)" hidden>Remove stop</button>
+        <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
+        <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="delivery">Save delivery</button>
       </div>
     </div>
   </div>
@@ -1119,8 +1178,8 @@ window.paOrderMatch = (o) => {
   return paInBranch(o) && (!st || o.status === st) && (!ev || o.event_type === ev) &&
     (!q || [o.id, o.customer, o.event_type, o.ingredients, o.window, o.branch].join(' ').toLowerCase().includes(q));
 };
-const STATUS_CLS = {'Assembling': 's-assembling', 'Driver Dispatched': 's-dispatched', 'Watering/Cooling': 's-cooling'};
-const STATUS_IC = {'Assembling': 'scissors', 'Driver Dispatched': 'truck', 'Watering/Cooling': 'droplet'};
+const STATUS_CLS = {'Assembling': 's-assembling', 'Driver Dispatched': 's-dispatched', 'Watering/Cooling': 's-cooling', 'Delivered': 's-delivered'};
+const STATUS_IC = {'Assembling': 'scissors', 'Driver Dispatched': 'truck', 'Watering/Cooling': 'droplet', 'Delivered': 'check'};
 const evClass = (t) => /bridal|wedding|bouton/i.test(t) ? 'is-bridal' : /sympathy|funeral/i.test(t) ? 'is-sympathy' : /subscription/i.test(t) ? 'is-sub' : /mother/i.test(t) ? 'is-mom' : '';
 dash.draw('queue', (tb) => {
   tb.replaceChildren();
@@ -1312,6 +1371,15 @@ dash.draw('notif-list', (ul) => {
 });
 
 /* ---------- deliveries ---------- */
+/* stops for the selected branch, in arrival order, numbered per branch */
+window.paDlList = () => {
+  const g = dash.data('deliveries');
+  if (g.status !== 'ok') return [];
+  const rows = g.data.filter(paInBranch).sort((a, b) => a.eta.localeCompare(b.eta));
+  const n = {};
+  rows.forEach((d) => { n[d.branch] = (n[d.branch] || 0) + 1; d.n = n[d.branch]; });
+  return rows;
+};
 window.paSTUDIO = {'Cavite': {x: 8, y: 84}, 'Imus': {x: 44, y: 86}, 'Boni-EDSA': {x: 92, y: 10}};
 dash.draw('route-map', (el) => {
   el.replaceChildren();
@@ -1326,10 +1394,10 @@ dash.draw('route-map', (el) => {
   const st = svg.append('g').attr('stroke', '#FFFFFF').attr('stroke-width', 5).attr('stroke-linecap', 'round');
   [.2, .45, .72].forEach((f) => st.append('line').attr('x1', 0).attr('x2', W).attr('y1', H * f).attr('y2', H * f + 18));
   [.18, .5, .8].forEach((f) => st.append('line').attr('y1', 0).attr('y2', H).attr('x1', W * f).attr('x2', W * f - 14));
-  const stops = g.data.filter(paInBranch);
+  const stops = paDlList();
   for (const b of paBRANCHES) {
-    const bs = stops.filter((d) => d.branch === b);
-    if (!bs.length && paBranch()) continue;
+    if (paBranch() && b !== paBranch()) continue;
+    const bs = stops.filter((d) => d.branch === b && d.status !== 'Delivered');
     const S = window.paSTUDIO[b];
     const pts = [{x: sx(S.x), y: sy(S.y)}, ...bs.map((d) => ({x: sx(d.x), y: sy(d.y)}))];
     if (pts.length > 1) svg.append('path').attr('d', d3.line((d) => d.x, (d) => d.y).curve(d3.curveCatmullRom.alpha(0.5))(pts))
@@ -1346,9 +1414,13 @@ dash.draw('route-map', (el) => {
     .attr('transform', (d) => `translate(${sx(d.x)},${sy(d.y)})`)
     .on('click', (ev, d) => { window.paStop = d.id; dash.draw('route-map'); dash.draw('stops'); });
   pin.append('circle').attr('class', 'ring').attr('r', (d) => d.id === sel ? 17 : 0).attr('fill', 'rgba(61,97,80,.16)');
-  pin.append('circle').attr('r', 11).attr('fill', (d) => d.id === sel ? 'var(--pa-forest)' : '#FFFCF7').attr('stroke', 'var(--pa-forest)').attr('stroke-width', 2);
+  const done = (d) => d.status === 'Delivered';
+  pin.attr('opacity', (d) => done(d) && d.id !== sel ? .6 : 1);
+  pin.append('circle').attr('r', 11)
+    .attr('fill', (d) => d.id === sel ? 'var(--pa-forest)' : done(d) ? 'var(--pa-sage-soft)' : '#FFFCF7')
+    .attr('stroke', (d) => done(d) && d.id !== sel ? 'var(--pa-sage)' : 'var(--pa-forest)').attr('stroke-width', 2);
   pin.append('text').attr('text-anchor', 'middle').attr('dy', '0.35em').attr('font-size', 11).attr('font-weight', 700)
-    .attr('fill', (d) => d.id === sel ? '#FBF7F0' : 'var(--pa-forest)').text((d) => d.stop);
+    .attr('fill', (d) => d.id === sel ? '#FBF7F0' : 'var(--pa-forest)').text((d) => done(d) ? '✓' : d.n);
   const sd = stops.find((d) => d.id === sel);
   if (sd) {
     const lab = svg.append('g');
@@ -1361,30 +1433,87 @@ dash.draw('route-map', (el) => {
     t.attr('x', lx + 6).attr('y', ly + 12);
   }
 });
+dash.draw('dl-progress', (el) => {
+  el.replaceChildren();
+  const rows = paDlList();
+  const done = rows.filter((d) => d.status === 'Delivered').length;
+  const onRoad = rows.filter((d) => d.status === 'En route').length;
+  const bar = paEl('div', 'pa-dl-bar');
+  const fill = paEl('span');
+  fill.style.width = (rows.length ? done / rows.length * 100 : 0) + '%';
+  bar.append(fill);
+  const t = paEl('span');
+  t.append(paEl('b', '', `${done} of ${rows.length}`), ` delivered · ${onRoad} on the road`);
+  el.append(t, bar);
+});
+dash.draw('dl-tabs', (el) => {
+  el.replaceChildren();
+  const rows = paDlList();
+  const cur = dash.params().dl || 'todo';
+  const tabs = [['todo', 'To do', rows.filter((d) => d.status !== 'Delivered').length], ['done', 'Delivered', rows.filter((d) => d.status === 'Delivered').length], ['all', 'All', rows.length]];
+  for (const [k, label, n] of tabs) {
+    const b = paEl('button', 'pa-dl-tab', label);
+    b.type = 'button';
+    b.dataset.dl = k;
+    b.setAttribute('aria-pressed', String(cur === k));
+    b.append(paEl('span', 'pa-cnt', String(n)));
+    el.append(b);
+  }
+});
+const DL_ST = {'Scheduled': 's-scheduled', 'En route': 's-enroute', 'Delivered': 's-delivered'};
 dash.draw('stops', (ul) => {
   ul.replaceChildren();
-  const g = dash.data('deliveries');
-  if (g.status !== 'ok') return;
-  for (const d of g.data.filter(paInBranch)) {
+  const cur = dash.params().dl || 'todo';
+  const rows = paDlList().filter((d) => cur === 'all' || (cur === 'done') === (d.status === 'Delivered'));
+  if (!rows.length) {
+    ul.append(paEl('li', 'pa-empty', cur === 'done' ? 'Nothing delivered yet.' : cur === 'todo' ? 'All deliveries are done. 🎉' : 'No deliveries today.'));
+    return;
+  }
+  for (const d of rows) {
+    const isDone = d.status === 'Delivered';
     const li = document.createElement('li');
-    const b = paEl('button', 'pa-stop' + (d.id === window.paStop ? ' is-sel' : ''));
-    b.type = 'button';
-    b.dataset.stop = d.id;
-    const n = paEl('span', 'pa-stop-n', String(d.stop));
+    const card = paEl('div', 'pa-stop' + (d.id === window.paStop ? ' is-sel' : '') + (isDone ? ' is-done' : ''));
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Show ${d.customer} on the map`);
+    card.dataset.stop = d.id;
+    const n = paEl('span', 'pa-stop-n', isDone ? '✓' : String(d.n));
     const body = paEl('div');
     const top = paEl('div', 'pa-stop-top');
     const eta = paEl('span', 'pa-eta');
-    eta.append(paIcon('clock'), document.createTextNode(d.eta));
+    eta.append(paIcon(isDone ? 'check' : 'clock'), document.createTextNode(isDone ? `Delivered ${d.deliveredAt || ''}`.trim() : d.eta));
     top.append(paEl('span', 'pa-stop-name', d.customer), eta);
     const meta = paEl('div', 'pa-stop-meta');
     const dr = paEl('span', 'pa-mini');
     dr.append(paIcon('truck'), document.createTextNode(`${d.driver} · ${d.vehicle}`));
-    const nt = paEl('span', 'pa-mini note');
-    nt.append(paIcon('note'), document.createTextNode(d.note));
-    meta.append(paEl('span', 'pa-mini st', d.status), paEl('span', 'pa-mini', d.branch), dr, nt);
-    body.append(top, paEl('div', 'pa-stop-addr', d.address), meta);
-    b.append(n, body);
-    li.append(b);
+    meta.append(paEl('span', 'pa-mini st ' + (DL_ST[d.status] || ''), d.status), paEl('span', 'pa-mini', d.orderId ? `${d.orderId} · ${d.branch}` : d.branch), dr);
+    if (d.note) {
+      const nt = paEl('span', 'pa-mini note');
+      nt.append(paIcon('note'), document.createTextNode(d.note));
+      meta.append(nt);
+    }
+    const acts = paEl('div', 'pa-stop-acts');
+    const act = (label, icon, action, cls) => {
+      const b = paEl('button', 'pa-sbtn' + (cls ? ' ' + cls : ''));
+      b.type = 'button';
+      b.dataset.act = action;
+      b.dataset.id = d.id;
+      b.append(paIcon(icon), document.createTextNode(label));
+      acts.append(b);
+    };
+    if (d.status === 'Scheduled') act('Start trip', 'truck', 'start', 'primary');
+    if (d.status === 'En route') act('Mark delivered', 'check', 'deliver', 'primary');
+    const dir = paEl('a', 'pa-sbtn');
+    dir.href = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(d.address);
+    dir.target = '_blank';
+    dir.rel = 'noopener';
+    dir.append(paIcon('pin'), document.createTextNode('Directions'));
+    if (!isDone) acts.append(dir);
+    if (isDone) act('Undo', 'repeat', 'undo');
+    else act('Edit', 'note', 'edit');
+    body.append(top, paEl('div', 'pa-stop-addr', d.address), meta, acts);
+    card.append(n, body);
+    li.append(card);
     ul.append(li);
   }
 });
@@ -1457,12 +1586,95 @@ $$('.pa-legbtn').forEach((b) => b.addEventListener('click', () => {
 }));
 $$('.pa-invf').forEach((b) => b.addEventListener('click', () => dash.setParams({inv: b.dataset.inv === 'all' ? 'all' : null})));
 
-$$('.pa-stops').forEach((ul) => ul.addEventListener('click', (e) => {
-  const b = e.target.closest('.pa-stop');
-  if (!b) return;
-  window.paStop = b.dataset.stop;
-  dash.draw('route-map');
-  dash.draw('stops');
+/* ---------- deliveries ---------- */
+const hhmm = () => { const d = new Date(); return `${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+const findStop = (id) => dash.data('deliveries').data.find((d) => d.id === id);
+const findOrder = (id) => id && dash.data('orders').data.find((o) => o.id === id);
+const bumpStage = (branch, stage, by) => {
+  const s = dash.data('stages_raw').data.find((x) => x.branch === branch && x.stage === stage);
+  if (s) s.count = Math.max(0, s.count + by);
+};
+const DL_ACT = {
+  start(d) {
+    d.status = 'En route';
+    const o = findOrder(d.orderId);
+    if (o) o.status = 'Driver Dispatched';
+    notify('Driver dispatched', `${d.branch} · ${d.driver} left for ${d.customer}`);
+    return `${d.driver} is on the way to ${d.customer}.`;
+  },
+  deliver(d) {
+    d.status = 'Delivered';
+    d.deliveredAt = hhmm();
+    const o = findOrder(d.orderId);
+    if (o) o.status = 'Delivered';
+    bumpStage(d.branch, 'Out for delivery', -1);
+    notify('Delivered', `${d.branch} · ${d.customer} at ${d.deliveredAt}`);
+    return `Delivered to ${d.customer}.`;
+  },
+  undo(d) {
+    d.status = 'En route';
+    d.deliveredAt = null;
+    const o = findOrder(d.orderId);
+    if (o) o.status = 'Driver Dispatched';
+    bumpStage(d.branch, 'Out for delivery', 1);
+    return `${d.customer} moved back to "En route".`;
+  },
+};
+const selectStop = (id) => { window.paStop = id; dash.draw('route-map'); dash.draw('stops'); };
+$$('.pa-stops').forEach((ul) => {
+  ul.addEventListener('click', (e) => {
+    if (e.target.closest('a')) return;
+    const a = e.target.closest('[data-act]');
+    if (a) {
+      const d = findStop(a.dataset.id);
+      if (!d) return;
+      if (a.dataset.act === 'edit') { e.stopPropagation(); openModal('delivery', d.id); return; }
+      const msg = DL_ACT[a.dataset.act](d);
+      window.paStop = d.id;
+      refresh();
+      toast('msg', msg);
+      return;
+    }
+    const b = e.target.closest('.pa-stop');
+    if (b) selectStop(b.dataset.stop);
+  });
+  ul.addEventListener('keydown', (e) => {
+    const b = e.target.classList && e.target.classList.contains('pa-stop') ? e.target : null;
+    if (b && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); selectStop(b.dataset.stop); }
+  });
+});
+$$('.pa-dl-tabs').forEach((el) => el.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-dl]');
+  if (b) dash.setParams({dl: b.dataset.dl === 'todo' ? null : b.dataset.dl});
+}));
+const fillDrivers = (m, keep) => {
+  const sel = m.querySelector('[name=driver]');
+  const br = m.querySelector('[name=branch]').value;
+  sel.replaceChildren(...(window.paDRIVERS[br] || []).map(([n, v]) => new Option(`${n} · ${v}`, `${n}|${v}`)));
+  if (keep && [...sel.options].some((o) => o.value === keep)) sel.value = keep;
+};
+$$('[data-form=delivery] [name=branch]').forEach((s) => s.addEventListener('change', () => fillDrivers(modal('delivery'))));
+$$('.pa-dl-remove').forEach((b) => b.addEventListener('click', () => {
+  const m = modal('delivery');
+  const list = dash.data('deliveries').data;
+  const i = list.findIndex((d) => d.id === m.querySelector('[name=id]').value);
+  if (i < 0) return;
+  const [d] = list.splice(i, 1);
+  closeModals();
+  refresh();
+  toast('msg', `Removed the stop for ${d.customer}.`);
+}));
+const placeNear = (branch) => {
+  const S = window.paSTUDIO[branch];
+  const c = (v) => Math.max(8, Math.min(92, v));
+  return {x: c(S.x + (Math.random() - 0.5) * 44), y: c(S.y - 10 - Math.random() * 40)};
+};
+window.paAddStop = (o) => {
+  const [driver, vehicle] = (window.paDRIVERS[o.branch] || [['Unassigned', '']])[0];
+  dash.data('deliveries').data.push({id: 'd' + Date.now(), driver, vehicle, status: 'Scheduled', note: '', ...placeNear(o.branch), ...o});
+};
+$$('[data-form=order] [name=fulfillment]').forEach((s) => s.addEventListener('change', () => {
+  $$('.pa-addr-field').forEach((f) => { f.hidden = s.value !== 'Delivery'; });
 }));
 
 /* ---------- date range dropdown ---------- */
@@ -1532,13 +1744,23 @@ const applySettings = (s) => {
 };
 try { const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null'); if (saved) applySettings(saved); } catch (e) {}
 
-const openModal = (id) => {
+const openModal = (id, editId) => {
   const m = modal(id);
   if (!m) return;
   closePop();
   $$('.pa-modal').forEach((x) => { x.hidden = x !== m; });
   m.querySelectorAll('.pa-err').forEach((e) => { e.hidden = true; });
   m.querySelectorAll('.is-invalid').forEach((e) => e.classList.remove('is-invalid'));
+  if (id === 'delivery') {
+    m.querySelectorAll('input').forEach((f) => { f.value = ''; });
+    const d = editId && findStop(editId);
+    m.querySelector('#pa-dl-t').textContent = d ? 'Edit delivery' : 'Add delivery';
+    m.querySelector('.pa-dl-remove').hidden = !d;
+    m.querySelector('[name=branch]').value = d ? d.branch : (paBranch() || 'Cavite');
+    fillDrivers(m, d ? `${d.driver}|${d.vehicle}` : '');
+    if (d) for (const k of ['id', 'customer', 'address', 'eta', 'note']) m.querySelector(`[name="${k}"]`).value = d[k] || '';
+  }
+  if (id === 'order') $$('.pa-addr-field').forEach((f) => { f.hidden = false; });
   if (id === 'order' || id === 'waste') {
     m.querySelectorAll('input, textarea').forEach((f) => { f.value = ''; });
     m.querySelectorAll('select').forEach((f) => { f.selectedIndex = 0; });
@@ -1568,6 +1790,7 @@ const SAVE = {
     const f = formVals('order');
     const customer = f.customer.trim();
     if (!customer) return fail('order', 'customer', 'Add the customer name.');
+    if (f.fulfillment === 'Delivery' && !f.address.trim()) return fail('order', 'address', 'Add the delivery address.');
     if (f.total !== '' && !(Number(f.total) >= 0)) return fail('order', 'total', 'Price must be 0 or more.');
     const orders = dash.data('orders').data;
     const id = 'PS-' + (Math.max(2040, ...orders.map((o) => Number(String(o.id).split('-')[1]) || 0)) + 1);
@@ -1581,9 +1804,29 @@ const SAVE = {
     const prep = dash.data('stages_raw').data.find((s) => s.stage === 'In prep' && s.branch === branch);
     if (prep) prep.count += 1;
     notify('New custom order', `${branch} · ${customer} · ${event_type}`);
+    const forToday = !f.date || f.date === todayISO();
+    if (!pickup && forToday) paAddStop({orderId: id, branch, customer, address: f.address.trim(), eta: f.window.split('–')[0]});
     $$('.pa-q').forEach((q) => { q.value = ''; });
     dash.setParams({status: null, q: null, event: null, ...(paBranch() && paBranch() !== branch ? {branch} : {})});
-    return `Order ${id} for ${customer} added to the ${branch} queue.`;
+    return `Order ${id} for ${customer} added to the ${branch} queue` + (!pickup && forToday ? ' and today\'s delivery run.' : '.');
+  },
+  delivery() {
+    const f = formVals('delivery');
+    const customer = f.customer.trim(), address = f.address.trim();
+    if (!customer) return fail('delivery', 'customer', 'Add who the delivery is for.');
+    if (!address) return fail('delivery', 'address', 'Add the delivery address.');
+    if (!f.eta) return fail('delivery', 'eta', 'Pick the arrival time.');
+    const [driver, vehicle] = f.driver.split('|');
+    const d = f.id && findStop(f.id);
+    if (d) {
+      if (d.branch !== f.branch) Object.assign(d, placeNear(f.branch));
+      Object.assign(d, {customer, address, eta: f.eta, note: f.note.trim(), branch: f.branch, driver, vehicle});
+    } else {
+      paAddStop({customer, address, eta: f.eta, note: f.note.trim(), branch: f.branch, driver, vehicle});
+    }
+    if (paBranch() && paBranch() !== f.branch) dash.setParams({branch: f.branch});
+    dash.setParams({dl: null});
+    return d ? `Updated the stop for ${customer}.` : `Added ${customer} to the ${f.branch} route.`;
   },
   waste() {
     const f = formVals('waste');

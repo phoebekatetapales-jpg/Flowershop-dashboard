@@ -413,6 +413,20 @@ html, body { margin: 0; background: #F6F1E9; }
 .pa-notif-empty { padding: 14px 10px; color: var(--pa-muted); font-size: 13px; }
 .pa-confirm-t { margin: 0; color: var(--pa-muted); }
 
+/* pages */
+.pa-content:not([data-view="dashboard"]) .pa-grid, .pa-content:not([data-view="dashboard"]) .pa-col { display: contents; }
+.pa-content:not([data-view="dashboard"]) .pa-dash-only { display: none; }
+.pa-pagehead { display: flex; flex-direction: column; }
+.pa-pagehead .pa-h1 { margin-top: 6px; }
+.pa-crumb { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--pa-faint); }
+.pa-crumb button { border: 0; background: transparent; padding: 0; color: var(--pa-forest-2); font-weight: 500; }
+.pa-crumb button:hover { text-decoration: underline; }
+.pa-crumb-cur { color: var(--pa-muted); }
+.pa-settings { max-width: 720px; }
+.pa-seeall { display: inline-flex; align-items: center; gap: 4px; border: 0; background: transparent; color: var(--pa-forest-2); font-size: 12.5px; font-weight: 500; padding: 4px 2px; white-space: nowrap; }
+.pa-seeall:hover { text-decoration: underline; }
+.pa-content[data-view="deliveries"] .pa-map { min-height: 280px; }
+
 /* recipes */
 .pa-recipes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 12px; }
 .pa-recipe { display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: 14px; border: 1px solid var(--pa-line-2); background: #FFFEFB; transition: border-color .18s, transform .18s; }
@@ -481,16 +495,16 @@ html, body { margin: 0; background: #F6F1E9; }
     </div>
     <div class="pa-nav-label pa-hide">Workspace</div>
     <ul class="pa-nav">
-      <li><button class="pa-nav-btn" type="button" aria-current="page" data-target="top" title="Dashboard"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span class="pa-hide">Dashboard</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="queue" title="Orders"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="pa-hide">Orders</span><span class="pa-nav-pill pa-hide">Live</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="inventory" title="Stem Inventory"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg><span class="pa-hide">Stem Inventory</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="recipes" title="Arrangement Recipes"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="pa-hide">Arrangement Recipes</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="queue" data-filter="Weekly Office Subscription" title="Subscriptions"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span class="pa-hide">Subscriptions</span></button></li>
-      <li><button class="pa-nav-btn" type="button" data-target="deliveries" title="Deliveries"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span class="pa-hide">Deliveries</span></button></li>
+      <li><button class="pa-nav-btn" type="button" aria-current="page" data-view="dashboard" title="Dashboard"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg><span class="pa-hide">Dashboard</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="orders" title="Orders"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="pa-hide">Orders</span><span class="pa-nav-pill pa-hide">Live</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="inventory" title="Stem Inventory"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg><span class="pa-hide">Stem Inventory</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="recipes" title="Arrangement Recipes"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span class="pa-hide">Arrangement Recipes</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="subscriptions" title="Subscriptions"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><span class="pa-hide">Subscriptions</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="deliveries" title="Deliveries"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg><span class="pa-hide">Deliveries</span></button></li>
     </ul>
     <div class="pa-nav-label pa-hide">Studio</div>
     <ul class="pa-nav">
-      <li><button class="pa-nav-btn" type="button" data-modal="settings" title="Store Settings"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg><span class="pa-hide">Store Settings</span></button></li>
+      <li><button class="pa-nav-btn" type="button" data-view="settings" title="Store Settings"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg><span class="pa-hide">Store Settings</span></button></li>
     </ul>
     <div class="pa-side-foot">
       <button class="pa-collapse" type="button" aria-expanded="true" aria-label="Collapse sidebar"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/></svg><span class="pa-hide">Collapse sidebar</span></button>
@@ -548,8 +562,13 @@ html, body { margin: 0; background: #F6F1E9; }
       </div>
     </header>
 
-    <main class="pa-content">
-      <section class="pa-hello" id="overview">
+    <main class="pa-content" data-view="dashboard">
+      <section class="pa-pagehead" data-views="orders inventory recipes subscriptions deliveries settings">
+        <nav class="pa-crumb" aria-label="Breadcrumb"><button type="button" class="pa-crumb-home" data-go="dashboard">Dashboard</button><span aria-hidden="true">/</span><span class="pa-crumb-cur"></span></nav>
+        <h1 class="pa-h1 pa-page-title"></h1>
+        <p class="pa-take pa-page-sub"></p>
+      </section>
+      <section class="pa-hello" id="overview" data-views="dashboard">
         <div>
           <span class="pa-eyebrow"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 16.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 1 1 12 7.5a4.5 4.5 0 1 1 4.5 4.5 4.5 4.5 0 1 1-4.5 4.5"/><path d="M12 7.5V9"/><path d="M7.5 12H9"/><path d="M16.5 12H15"/><path d="M12 16.5V15"/><path d="m8 8 1.88 1.88"/><path d="M14.12 9.88 16 8"/><path d="m8 16 1.88-1.88"/><path d="M14.12 14.12 16 16"/></svg> Mother's Day Weekend · Saturday</span>
           <h1 class="pa-h1">Good morning, Elena</h1>
@@ -559,7 +578,7 @@ html, body { margin: 0; background: #F6F1E9; }
       </section>
 
       <!-- KPI ROW -->
-      <section class="pa-kpis" id="kpis" aria-label="Key metrics">
+      <section class="pa-kpis" id="kpis" aria-label="Key metrics" data-views="dashboard">
         <article class="pa-card pa-kpi" id="kpi-revenue">
           <div class="pa-kpi-h"><span class="pa-chip-ic pa-ci-forest"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>Revenue<span class="pa-win" data-draw="val" data-source="rev" data-field="label">Today</span></div>
           <div class="pa-big"><span class="dash-skeleton" data-draw="val" data-source="rev" data-field="today" data-fmt="money">—</span></div>
@@ -608,11 +627,12 @@ html, body { margin: 0; background: #F6F1E9; }
       <section class="pa-grid">
         <div class="pa-col">
           <!-- Queue -->
-          <article class="pa-card pa-panel" id="queue">
+          <article class="pa-card pa-panel" id="queue" data-views="dashboard orders subscriptions">
             <div class="pa-panel-h">
               <div>
                 <h2 class="pa-h2"><span class="pa-livedot"></span>Live order fulfillment queue</h2>
                 <p class="pa-note">Today's custom work, newest first · click a status tag to filter</p>
+                <button class="pa-seeall pa-dash-only" type="button" data-go="orders">Open Orders →</button>
               </div>
               <div class="pa-chips" role="group" aria-label="Filter by status">
                 <button class="pa-chipbtn pa-qchip" type="button" data-status="" aria-pressed="true">All <span class="pa-cnt" data-draw="val" data-source="status_counts" data-field="n" data-where="status=All" data-fmt="int">—</span></button>
@@ -640,7 +660,7 @@ html, body { margin: 0; background: #F6F1E9; }
           </article>
 
           <!-- Weekly chart -->
-          <article class="pa-card pa-panel" id="weekly">
+          <article class="pa-card pa-panel" id="weekly" data-views="dashboard">
             <div class="pa-panel-h">
               <div>
                 <h2 class="pa-h2">Weekly revenue &amp; deliveries</h2>
@@ -671,11 +691,12 @@ html, body { margin: 0; background: #F6F1E9; }
 
         <div class="pa-col">
           <!-- Inventory -->
-          <article class="pa-card pa-panel" id="inventory">
+          <article class="pa-card pa-panel" id="inventory" data-views="dashboard inventory">
             <div class="pa-panel-h">
               <div>
                 <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> Critical stem inventory</h2>
                 <p class="pa-note">Par levels and shelf life · coolers 1 &amp; 2</p>
+                <button class="pa-seeall pa-dash-only" type="button" data-go="inventory">Open Stem Inventory →</button>
               </div>
               <div class="pa-seg" role="group" aria-label="Show stems">
                 <button class="pa-invf" type="button" data-inv="attention" aria-pressed="true">Needs attention</button>
@@ -686,11 +707,12 @@ html, body { margin: 0; background: #F6F1E9; }
           </article>
 
           <!-- Deliveries -->
-          <article class="pa-card pa-panel" id="deliveries">
+          <article class="pa-card pa-panel" id="deliveries" data-views="dashboard deliveries">
             <div class="pa-panel-h">
               <div>
                 <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Today's delivery run</h2>
                 <p class="pa-note">Tap a stop to find it on the map · update it as the driver goes</p>
+                <button class="pa-seeall pa-dash-only" type="button" data-go="deliveries">Open Deliveries →</button>
               </div>
               <button class="pa-btn pa-btn-ghost pa-open pa-btn-sm" type="button" data-modal="delivery"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Add delivery</button>
             </div>
@@ -703,7 +725,7 @@ html, body { margin: 0; background: #F6F1E9; }
       </section>
 
       <!-- Recipes -->
-      <article class="pa-card pa-panel" id="recipes">
+      <article class="pa-card pa-panel" id="recipes" data-views="recipes">
         <div class="pa-panel-h">
           <div>
             <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Arrangement recipes</h2>
@@ -711,6 +733,30 @@ html, body { margin: 0; background: #F6F1E9; }
           </div>
         </div>
         <ul class="pa-recipes" data-draw="recipes" data-source="orders"></ul>
+      </article>
+
+      <!-- Store settings page -->
+      <article class="pa-card pa-panel pa-settings" id="settings" data-views="settings" data-modal-id="settings">
+        <div class="pa-panel-h">
+          <div>
+            <h2 class="pa-h2"><svg class="pa-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg> Shop details &amp; targets</h2>
+            <p class="pa-note">The cold room and spoilage targets the dashboard checks against</p>
+          </div>
+        </div>
+        <div class="pa-fields" data-form="settings">
+          <p class="pa-err" hidden></p>
+          <label class="pa-field full">Shop name<input name="shop" type="text"></label>
+          <label class="pa-field full">Tagline<input name="tagline" type="text"></label>
+          <label class="pa-field">Cold room min (°F)<input name="tMin" type="number" step="1"></label>
+          <label class="pa-field">Cold room max (°F)<input name="tMax" type="number" step="1"></label>
+          <label class="pa-field">Humidity min (%)<input name="hMin" type="number" step="1" min="0" max="100"></label>
+          <label class="pa-field">Humidity max (%)<input name="hMax" type="number" step="1" min="0" max="100"></label>
+          <label class="pa-field full">Weekly spoilage goal (%)<input name="goal" type="number" step="0.5" min="0" max="20"></label>
+        </div>
+        <div class="pa-dialog-f">
+          <button class="pa-btn pa-btn-ghost pa-settings-reset" type="button">Discard changes</button>
+          <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="settings">Save settings</button>
+        </div>
       </article>
     </main>
   </div>
@@ -802,32 +848,6 @@ html, body { margin: 0; background: #F6F1E9; }
         <button class="pa-btn pa-btn-ghost pa-dl-remove" type="button" style="margin-right:auto;color:var(--pa-rose-ink)" hidden>Remove stop</button>
         <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
         <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="delivery">Save delivery</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="pa-modal" data-modal-id="settings" hidden>
-    <div class="pa-dialog" role="dialog" aria-modal="true" aria-labelledby="pa-settings-t">
-      <div class="pa-dialog-h">
-        <div>
-          <h2 class="pa-h2" id="pa-settings-t">Store settings</h2>
-          <p class="pa-note">Shop details and the targets the dashboard checks against</p>
-        </div>
-        <button class="pa-iconbtn pa-close" type="button" aria-label="Close"><svg class="pa-ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
-      </div>
-      <div class="pa-fields" data-form="settings">
-        <p class="pa-err" hidden></p>
-        <label class="pa-field full">Shop name<input name="shop" type="text"></label>
-        <label class="pa-field full">Tagline<input name="tagline" type="text"></label>
-        <label class="pa-field">Cold room min (°F)<input name="tMin" type="number" step="1"></label>
-        <label class="pa-field">Cold room max (°F)<input name="tMax" type="number" step="1"></label>
-        <label class="pa-field">Humidity min (%)<input name="hMin" type="number" step="1" min="0" max="100"></label>
-        <label class="pa-field">Humidity max (%)<input name="hMax" type="number" step="1" min="0" max="100"></label>
-        <label class="pa-field full">Weekly spoilage goal (%)<input name="goal" type="number" step="0.5" min="0" max="20"></label>
-      </div>
-      <div class="pa-dialog-f">
-        <button class="pa-btn pa-btn-ghost pa-close" type="button">Cancel</button>
-        <button class="pa-btn pa-btn-primary pa-save" type="button" data-save="settings">Save settings</button>
       </div>
     </div>
   </div>
@@ -976,7 +996,7 @@ dash.calc('status_counts', {
   title: 'Orders by status',
   description: 'How many queue orders are in each status, plus all of them.',
   fn: (all) => {
-    const orders = all.filter(paInBranch);
+    const orders = all.filter((o) => paInBranch(o) && (window.paView !== 'subscriptions' || /subscription/i.test(o.event_type)));
     const statuses = ['Assembling', 'Driver Dispatched', 'Watering/Cooling'];
     return [{status: 'All', n: orders.length}, ...statuses.map((s) => ({status: s, n: orders.filter((o) => o.status === s).length}))];
   },
@@ -1174,8 +1194,8 @@ window.paOrderMatch = (o) => {
   const p = dash.params();
   const st = p.status || '';
   const q = String(p.q || '').toLowerCase().trim();
-  const ev = p.event || '';
-  return paInBranch(o) && (!st || o.status === st) && (!ev || o.event_type === ev) &&
+  const subOnly = window.paView === 'subscriptions';
+  return paInBranch(o) && (!st || o.status === st) && (!subOnly || /subscription/i.test(o.event_type)) &&
     (!q || [o.id, o.customer, o.event_type, o.ingredients, o.window, o.branch].join(' ').toLowerCase().includes(q));
 };
 const STATUS_CLS = {'Assembling': 's-assembling', 'Driver Dispatched': 's-dispatched', 'Watering/Cooling': 's-cooling', 'Delivered': 's-delivered'};
@@ -1538,15 +1558,59 @@ const toast = (id, msg) => {
   toastTimer = setTimeout(() => $$('.pa-toast').forEach((t) => { t.hidden = true; }), 3200);
 };
 
-$$('.pa-nav-btn').forEach((b) => b.addEventListener('click', (e) => {
-  if (b.dataset.modal) { e.stopPropagation(); openModal(b.dataset.modal); return; }
-  const target = b.dataset.target;
-  if (!target) { toast('soon'); return; }
-  $$('.pa-nav-btn').forEach((x) => x.removeAttribute('aria-current'));
-  b.setAttribute('aria-current', 'page');
-  dash.setParams({event: b.dataset.filter || null});
-  document.querySelectorAll('#' + target).forEach((el) => { el.scrollIntoView({behavior: 'smooth', block: 'start'}); dash.setLink(target); });
-}));
+/* ---------- pages (sidebar) ---------- */
+const VIEWS = {
+  dashboard: {title: 'Dashboard'},
+  orders: {title: 'Orders', sub: 'Every custom order · filter by status, branch or search'},
+  inventory: {title: 'Stem Inventory', sub: 'Stock on hand, par levels and shelf life for each branch'},
+  recipes: {title: 'Arrangement Recipes', sub: 'What goes into each order, with low-stock stems flagged'},
+  subscriptions: {title: 'Subscriptions', sub: 'Recurring weekly and office flower orders'},
+  deliveries: {title: 'Deliveries', sub: "Today's routes for each branch · update stops as drivers go"},
+  settings: {title: 'Store Settings', sub: 'Shop details and the targets the dashboard checks against'},
+};
+window.paView = 'dashboard';
+const shopName = () => (document.querySelector('.pa-brand-name') || {}).textContent || "Gayle's Flower Shop";
+const fillSettings = () => {
+  const m = document.querySelector('[data-form=settings]');
+  if (!m) return;
+  const C = window.paCOLD;
+  const v = {
+    shop: shopName(),
+    tagline: document.querySelector('.pa-brand-sub').textContent,
+    tMin: C.tMin, tMax: C.tMax, hMin: C.hMin, hMax: C.hMax,
+    goal: +(window.paSPOIL_GOAL * 100).toFixed(1),
+  };
+  for (const k in v) m.querySelector(`[name="${k}"]`).value = v[k];
+  m.querySelectorAll('.pa-err').forEach((e) => { e.hidden = true; });
+  m.querySelectorAll('.is-invalid').forEach((e) => e.classList.remove('is-invalid'));
+};
+const setView = (v) => {
+  if (!VIEWS[v]) v = 'dashboard';
+  window.paView = v;
+  $$('.pa-content').forEach((m) => { m.dataset.view = v; });
+  $$('[data-views]').forEach((el) => { el.hidden = !el.dataset.views.split(' ').includes(v); });
+  $$('.pa-nav-btn').forEach((b) => { if (b.dataset.view === v) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  $$('.pa-page-title, .pa-crumb-cur').forEach((e) => { e.textContent = VIEWS[v].title; });
+  $$('.pa-page-sub').forEach((e) => { e.textContent = VIEWS[v].sub || ''; });
+  document.title = v === 'dashboard' ? `${shopName()} · Dashboard` : `${VIEWS[v].title} · ${shopName()}`;
+  if (v === 'settings') fillSettings();
+  closeModals();
+  closePop();
+  window.scrollTo(0, 0);
+  refresh();
+};
+const go = (v) => {
+  const h = v === 'dashboard' ? '#/' : '#/' + v;
+  if (location.hash !== h) location.hash = h; else setView(v);
+};
+const viewFromHash = () => location.hash.replace(/^#\/?/, '') || 'dashboard';
+addEventListener('hashchange', () => setView(viewFromHash()));
+$$('.pa-nav-btn').forEach((b) => b.addEventListener('click', () => go(b.dataset.view)));
+document.addEventListener('click', (e) => {
+  const g = e.target.closest('[data-go]');
+  if (g) go(g.dataset.go);
+});
+$$('.pa-settings-reset').forEach((b) => b.addEventListener('click', fillSettings));
 $$('[data-soon]').forEach((b) => b.addEventListener('click', () => toast('soon')));
 
 $$('.pa-q').forEach((inp) => {
@@ -1713,7 +1777,7 @@ document.addEventListener('click', closePop);
 /* ---------- modals ---------- */
 const pad = (n) => String(n).padStart(2, '0');
 const todayISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
-const modal = (id) => document.querySelector(`.pa-modal[data-modal-id="${id}"]`);
+const modal = (id) => document.querySelector(`[data-modal-id="${id}"]`);
 const formVals = (id) => {
   const o = {};
   modal(id).querySelectorAll('[name]').forEach((f) => { o[f.name] = f.value; });
@@ -1733,7 +1797,7 @@ const SETTINGS_KEY = 'gfs-dashboard-settings';
 const applySettings = (s) => {
   if (s.shop) {
     $$('.pa-brand-name, .pa-brand-copy').forEach((e) => { e.textContent = s.shop; });
-    document.title = s.shop + ' · Dashboard';
+    document.title = window.paView === 'dashboard' ? s.shop + ' · Dashboard' : `${VIEWS[window.paView].title} · ${s.shop}`;
   }
   if (s.tagline != null) $$('.pa-brand-sub').forEach((e) => { e.textContent = s.tagline; });
   if (s.cold) window.paCOLD = s.cold;
@@ -1770,16 +1834,6 @@ const openModal = (id, editId) => {
     if (paBranch()) m.querySelector('[name=branch]').value = paBranch();
   }
   if (id === 'waste') { dash.draw('waste-stem'); m.querySelector('[name=stem]').selectedIndex = 0; }
-  if (id === 'settings') {
-    const C = window.paCOLD;
-    const v = {
-      shop: document.querySelector('.pa-brand-name').textContent,
-      tagline: document.querySelector('.pa-brand-sub').textContent,
-      tMin: C.tMin, tMax: C.tMax, hMin: C.hMin, hMax: C.hMax,
-      goal: +(window.paSPOIL_GOAL * 100).toFixed(1),
-    };
-    for (const k in v) m.querySelector(`[name="${k}"]`).value = v[k];
-  }
   const first = m.querySelector('input, select, textarea') || m.querySelector('.pa-save');
   if (first) setTimeout(() => first.focus(), 30);
 };
@@ -1913,6 +1967,6 @@ dash.onData(() => {
 </script>
 
 </div>
-<script>dash._start();</script>
+<script>setView(viewFromHash()); dash._start();</script>
 </body>
 </html>
